@@ -14,13 +14,9 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::paginate();
-        return view(
-            'todos',
-            [
-                'todos' => $todos
-            ]
-        );
+        $allTodos = Todo::all();
+
+        dd($allTodos);
     }
 
     /**
@@ -30,24 +26,24 @@ class TodoController extends Controller
      */
     public function create()
     {
-        Todo::create([
-            'title' => 'Новая задача',
-            'description' => 'Описание задачи…',
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s"),
-        ]);
-
-        return redirect()->back();
-    }
-
-    public function find($id) {
-        $todo = Todo::find($id);
-        return view(
-            'todoItem',
+        $fakeTasks = [
             [
-                'todo' => $todo
+                'title' => 'Сходить в магазин',
+                'description' => 'Купить хлеб',
+                'done' => true
+            ],
+            [
+                'title' => 'Сходить в кино',
+                'description' => 'Посмотреть фильм',
+                'done' => false
             ]
-        );
+        ];
+
+        foreach($fakeTasks as $task) {
+            Todo::create($task);
+        }
+
+        return redirect('todo');
     }
 
     /**
@@ -67,9 +63,10 @@ class TodoController extends Controller
      * @param  \App\Models\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function show(Todo $todo)
+    public function show(Todo $todo, $id)
     {
-        //
+        $task = Todo::find($id);
+        dd($task);
     }
 
     /**

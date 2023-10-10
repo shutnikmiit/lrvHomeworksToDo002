@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 255)->default('');
-            $table->string('description', 'text')->default('');
+            $table->string('title')->default('Новая задача');
+            $table->text('description')->default('Описание задачи…');
+            $table->boolean('done')->default(false);
             $table->timestamps();
         });
     }
